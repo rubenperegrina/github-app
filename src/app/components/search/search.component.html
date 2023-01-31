@@ -1,0 +1,39 @@
+<mat-form-field>
+  <mat-label>Enter a github username</mat-label>
+  <input matInput [(ngModel)]="userName" placeholder="Github user">
+</mat-form-field>
+<button mat-raised-button color="primary" (click)="getUserData(userName)">SEARCH</button>
+
+  <ng-container *ngIf="userList">
+    <h1>Total results: {{userCount}}</h1>
+  
+    <table class="mat-elevation-z8" mat-table recycleRows [dataSource]="userList">
+      <ng-container matColumnDef="avatar_url">
+        <th mat-header-cell *matHeaderCellDef> Image </th>
+        <td mat-cell *matCellDef="let element">
+          <img class="image" src="{{element.avatar_url}}">
+          </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef> Type </th>
+        <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="login">
+        <th mat-header-cell *matHeaderCellDef> Url </th>
+        <td mat-cell *matCellDef="let element">
+          <a href="{{element.html_url}}" target="_blank">
+            {{element.login}}
+          </a>
+        </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </ng-container>
+
+  <ng-container *ngIf="!userList">
+    <h1>NO RESULTS YET</h1>
+  </ng-container>
